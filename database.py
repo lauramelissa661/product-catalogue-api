@@ -1,6 +1,3 @@
-# Simple in-memory "database" using dicts
-# In production this would be replaced with a real DB (e.g. PostgreSQL)
-
 from app.models import Product, Order
 
 products_db: dict[int, Product] = {
