@@ -48,7 +48,7 @@ python -m pytest tests/test_api.py -v
 
 ## Live site
 
-http://product-catalogue-api-lauramelissa.s3-website.eu-north-1.amazonaws.com/#
+http://product-catalogue-api-lauramelissa.s3-website.eu-north-1.amazonaws.com/
 
 ---
 
