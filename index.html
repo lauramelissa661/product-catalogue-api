@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Catalogue API — Laura Melissa</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: #0d0d0d;
+      color: #aaa;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 42px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+
+    .topbar .course-tag {
+      background: #222;
+      color: #ccc;
+      padding: 3px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      border: 1px solid #333;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: white;
+      border-bottom: 4px solid #1a1a2e;
+      padding: 48px 48px 40px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 10px;
+    }
+
+    .header h1 span { color: #4361ee; }
+
+    .header p {
+      font-size: 0.95rem;
+      color: #666;
+      max-width: 520px;
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .info-item {
+      padding: 14px 18px;
+      border-right: 1px solid #e8e8e8;
+      background: #fafafa;
+    }
+
+    .info-item:last-child { border-right: none; }
+
+    .info-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .info-value.green { color: #198754; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 48px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    /* ABOUT */
+    .about p {
+      font-size: 0.93rem;
+      color: #555;
+      line-height: 1.75;
+    }
+
+    /* ENDPOINTS */
+    .endpoint-group-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 14px 0 8px;
+    }
+
+    .endpoint {
+      display: grid;
+      grid-template-columns: 76px 190px 1fr;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 16px;
+      background: white;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      transition: border-color 0.15s;
+    }
+
+    .endpoint:hover { border-color: #1a1a2e; }
+
+    .method {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    .GET    { background: #d1fae5; color: #065f46; }
+    .POST   { background: #dbeafe; color: #1e3a8a; }
+    .PUT    { background: #fef3c7; color: #92400e; }
+    .PATCH  { background: #ede9fe; color: #5b21b6; }
+    .DELETE { background: #fee2e2; color: #991b1b; }
+
+    .ep-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #1a1a2e;
+    }
+
+    .ep-desc { font-size: 0.82rem; color: #888; }
+
+    /* LINKS */
+    .link-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn {
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 10px 22px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #1a1a2e;
+      border: 1px solid #ddd;
+    }
+
+    .btn-secondary:hover {
+      background: #1a1a2e;
+      color: white;
+      border-color: #1a1a2e;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0d0d0d;
+      color: #555;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    footer .left { color: #888; }
+
+    @media (max-width: 640px) {
+      .topbar, .header, main, footer { padding-left: 20px; padding-right: 20px; }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+      .endpoint { grid-template-columns: 70px 1fr; }
+      .ep-desc { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR — just the course tag, no student portfolio text -->
+<div class="topbar">
+  <span class="course-tag">Cloud Technology</span>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Product Catalogue <span>API</span></h1>
+  <p>A RESTful API for managing a product catalogue and placing orders. Built with FastAPI (Python) and deployed on AWS S3.</p>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <div class="info-label">Student</div>
+      <div class="info-value">Laura Melissa</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Module</div>
+      <div class="info-value">Cloud Technology</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Tests</div>
+      <div class="info-value green">18 / 18 Passing ✓</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- ABOUT -->
+  <div class="about">
+    <div class="section-title">About</div>
+    <p>This API allows users to browse a product catalogue, create and manage products, and place orders. Orders automatically validate stock and update inventory. The API is documented with Swagger UI and the project page is hosted on AWS S3.</p>
+  </div>
+
+  <!-- ENDPOINTS -->
+  <div>
+    <div class="section-title">API Endpoints</div>
+
+    <div class="endpoint-group-label">Products</div>
+    <div class="endpoint">
+      <span class="method GET">GET</span>
+      <span class="ep-path">/products/</span>
+      <span class="ep-desc">List all products</span>
+    </div>
+    <div class="endpoint">
+      <span class="method GET">GET</span>
+      <span class="ep-path">/products/{id}</span>
+      <span class="ep-desc">Get one product by ID</span>
+    </div>
+    <div class="endpoint">
+      <span class="method POST">POST</span>
+      <span class="ep-path">/products/</span>
+      <span class="ep-desc">Create a new product</span>
+    </div>
+    <div class="endpoint">
+      <span class="method PUT">PUT</span>
+      <span class="ep-path">/products/{id}</span>
+      <span class="ep-desc">Update a product</span>
+    </div>
+    <div class="endpoint">
+      <span class="method DELETE">DELETE</span>
+      <span class="ep-path">/products/{id}</span>
+      <span class="ep-desc">Delete a product</span>
+    </div>
+
+    <div class="endpoint-group-label">Orders</div>
+    <div class="endpoint">
+      <span class="method GET">GET</span>
+      <span class="ep-path">/orders/</span>
+      <span class="ep-desc">List all orders</span>
+    </div>
+    <div class="endpoint">
+      <span class="method GET">GET</span>
+      <span class="ep-path">/orders/{id}</span>
+      <span class="ep-desc">Get one order by ID</span>
+    </div>
+    <div class="endpoint">
+      <span class="method POST">POST</span>
+      <span class="ep-path">/orders/</span>
+      <span class="ep-desc">Place a new order</span>
+    </div>
+    <div class="endpoint">
+      <span class="method PATCH">PATCH</span>
+      <span class="ep-path">/orders/{id}/status</span>
+      <span class="ep-desc">Update order status</span>
+    </div>
+  </div>
+
+  <!-- LINKS -->
+  <div>
+    <div class="section-title">Links</div>
+    <div class="link-row">
+      <a href="YOUR_GITHUB_LINK_HERE" class="btn btn-secondary">💻 GitHub Repository</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <span class="left">Product Catalogue API — Cloud Technology</span>
+  <span>Laura Melissa · FastAPI · AWS S3</span>
+</footer>
+
+</body>
+</html>
+ 
